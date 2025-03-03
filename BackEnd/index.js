@@ -15,6 +15,8 @@ dotenv.config();
 const app = express();
 
 const _dirname=path.resolve();
+console.log("MONGO_URI:", process.env.MONGO_URI);
+
 
 // Middleware
 app.use(express.json()); // Parse incoming JSON requests
