@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { USER_API_END_POINT } from "../../utils/constant";
 //import { Toaster } from "sonner";
 import { setLoading, setUser } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
@@ -38,7 +37,7 @@ const Login = () => {
   
     try {
       dispatch(setLoading(true))
-      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+      const res = await axios.post(`https://job-portal-application-2-ilnb.onrender.com/api/v1/user/login`, input, {
         headers: {
           "Content-Type": "application/json",
         },

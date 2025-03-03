@@ -1,5 +1,4 @@
 import { setLoading } from '@/redux/authSlice';
-import { USER_API_END_POINT } from '@/utils/constant';
 import axios from "axios";
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from "react";
@@ -54,7 +53,7 @@ const Signup = () => {
 
     try {
       dispatch(setLoading(true))
-      const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+      const res = await axios.post(`https://job-portal-application-2-ilnb.onrender.com/api/v1/user/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

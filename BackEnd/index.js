@@ -25,7 +25,7 @@ app.use(cookieParser()); // Parse cookies
 
 // CORS configuration
 const corsOption = {
-  origin: "http://localhost:5173", // Your frontend URL
+  origin: "https://job-portal-application-2-ilnb.onrender.com/", // Your frontend URL
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 app.use(cors(corsOption));
