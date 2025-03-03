@@ -41,7 +41,9 @@ app.get('*',(_,res)=>{
 
 
 // The server is listening on PORT 8000
- const PORT =  8002;
+//console.log(process.env.PORT);
+
+ const PORT =  process.env.PORT;
 
 // Start the server
 app.listen(PORT, () => {
