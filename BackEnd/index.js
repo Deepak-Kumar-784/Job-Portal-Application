@@ -13,22 +13,19 @@ import connectDB from "./utils/db.js";
 dotenv.config();
 
 const app = express();
-
-const _dirname=path.resolve();
-//console.log("MONGO_URI:", process.env.MONGO_URI);
-
+const __dirname = path.resolve();
 
 // Middleware
-app.use(express.json()); // Parse incoming JSON requests
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
-app.use(cookieParser()); // Parse cookies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // CORS configuration
-const corsOption = {
-  origin: "https://job-portal-application-2-ilnb.onrender.com/", // Your frontend URL
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+const corsOptions = {
+  origin: "https://job-portal-application-2-ilnb.onrender.com", // Removed trailing slash
+  credentials: true,
 };
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
 // API Routes
 app.use("/api/v1/user", userRoute);
@@ -36,19 +33,30 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-app.use(express.static(path.join(_dirname,"/FrontEnd/dist")))
-app.get('*',(_,res)=>{
-  res.sendFile(path.resolve(_dirname,"FrontEnd","dist","index.html"))
-})//if any route other than user,company etc..come then this ll hep to serve
+// Serve frontend files
+app.use(express.static(path.join(__dirname, "/FrontEnd/dist")));
 
+app.get("*", (_, res) => {
+  try {
+    res.sendFile(path.resolve(__dirname, "FrontEnd", "dist", "index.html"));
+  } catch (error) {
+    console.error("Error serving frontend:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
-// The server is listening on PORT 8000
-//console.log(process.env.PORT);
+// Start the server after ensuring DB connection
+const startServer = async () => {
+  try {
+    await connectDB(); // Ensure database is connected before starting the server
+    const PORT = process.env.PORT || 8000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    process.exit(1); // Exit if DB connection fails
+  }
+};
 
- const PORT =  process.env.PORT;
-
-// Start the server
-app.listen(PORT, () => {
-  connectDB(); // Ensure database connection
-  console.log(`Server is running on port ${PORT}`);
-});    
+startServer();

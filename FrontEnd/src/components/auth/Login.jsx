@@ -1,19 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-//import { Toaster } from "sonner";
 import { setLoading, setUser } from "@/redux/authSlice";
 import { USER_API_END_POINT } from '@/utils/constant';
+import axios from "axios";
 import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'sonner';
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
-
-
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -28,16 +25,14 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
-  const dispatch=useDispatch();
-
-  const {loading,user}=useSelector(store=>store.auth);
-
+  const dispatch = useDispatch();
+  const { loading, user } = useSelector(store => store.auth);
 
   const submitHandler = async (e) => {
     e.preventDefault();
   
     try {
-      dispatch(setLoading(true))
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/api/v1/user/login`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -46,25 +41,23 @@ const Login = () => {
       });
   
       if (res.data.success) {
-        dispatch(setUser(res.data.user))
-        navigate("/"); // Ensure navigate is imported from react-router-dom
+        dispatch(setUser(res.data.user));
+        navigate("/");
         toast.success(res.data.message);
       }
-    } catch (error) { // Use "error" instead of "e" in the catch block
-      console.log(error); // Log the error for debugging
-      toast.error(error.response?.data?.message || "An error occurred"); // Safe access response
-    }
-    finally{
-      dispatch(setLoading(false))
+    } catch (error) { 
+      console.log(error); 
+      toast.error(error.response?.data?.message || "An error occurred");
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   
-  useEffect(()=>{
-    if(user){
-      navigate("/")
+  useEffect(() => {
+    if (user) {
+      navigate("/");
     }
-  },[])
-
+  }, [user]); // Added `user` as a dependency
 
   return (
     <div>
@@ -81,13 +74,13 @@ const Login = () => {
               Email
             </Label>
             <Input
-             type="email"
-             value={input.email}
-             name="email"
-             onChange={changeEventHandler}
-             placeholder="abhigrace@gmail.com" 
-             className=" text-gray-400 w-full px-4 py-2 rounded-md border border-gray-300" />
-            
+              type="email"
+              value={input.email}
+              name="email"
+              onChange={changeEventHandler}
+              placeholder="abhigrace@gmail.com"
+              className=" text-gray-400 w-full px-4 py-2 rounded-md border border-gray-300"
+            />
           </div>
 
           <div className="my-4">
@@ -96,28 +89,26 @@ const Login = () => {
             </Label>
             <Input
               type="password"
-             value={input.password}
-             name="password"
-             onChange={changeEventHandler}
-             placeholder="Enter your password " 
-             className="text-gray-400 w-full px-4 py-2 rounded-md border border-gray-300"
+              value={input.password}
+              name="password"
+              onChange={changeEventHandler}
+              placeholder="Enter your password "
+              className="text-gray-400 w-full px-4 py-2 rounded-md border border-gray-300"
             />
           </div>
+
           <div className="flex flex-col gap-4 my-6">
             <RadioGroup className="flex gap-6 items-center">
               <div className="flex items-center space-x-2">
                 <Input
-                   type="radio"
+                  type="radio"
                   name="role"
                   value="student"
-                  checked={input.role=='student'}
+                  checked={input.role === "student"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label
-                  htmlFor="student"
-                  className="text-gray-700 cursor-pointer"
-                >
+                <Label htmlFor="student" className="text-gray-700 cursor-pointer">
                   Student
                 </Label>
               </div>
@@ -126,29 +117,28 @@ const Login = () => {
                   type="radio"
                   name="role"
                   value="recruiter"
-                  checked={input.role=='recruiter'}
+                  checked={input.role === "recruiter"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label
-                  htmlFor="recruiter"
-                  className="text-gray-700 cursor-pointer"
-                >
+                <Label htmlFor="recruiter" className="text-gray-700 cursor-pointer">
                   Recruiter
                 </Label>
               </div>
             </RadioGroup>
           </div>
-          {
-            loading?<Button className="w-full my-4"><Loader2  className="mr-2 h-4 w-4 animate-spin"/>Please wait</Button>:
-            <Button
-            type="submit"
-            className="w-full my-4 bg-black text-white py-2 rounded-md hover:bg-gray-800"
-          >
-            Login
-          </Button>
-          }
-         
+
+          {loading ? (
+            <Button className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4 bg-black text-white py-2 rounded-md hover:bg-gray-800">
+              Login
+            </Button>
+          )}
+
           <span className="text-sm text-gray-600">
             Don't have an account?{" "}
             <Link to="/signup" className="text-blue-800 underline">
