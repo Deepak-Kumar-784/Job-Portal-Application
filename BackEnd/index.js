@@ -46,17 +46,10 @@ app.get("*", (_, res) => {
 });
 
 // Start the server after ensuring DB connection
-const startServer = async () => {
-  try {
-    await connectDB(); // Ensure database is connected before starting the server
-    const PORT = process.env.PORT || 8000;
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error("Database connection failed:", error);
-    process.exit(1); // Exit if DB connection fails
-  }
-};
+const PORT =  process.env.PORT||8000;
 
-startServer();
+// Start the server
+app.listen(PORT, () => {
+  connectDB(); // Ensure database connection
+  console.log(`Server is running on port ${PORT}`);
+}); 
