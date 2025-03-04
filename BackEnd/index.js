@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 
 const _dirname=path.resolve();
-console.log("MONGO_URI:", process.env.MONGO_URI);
+//console.log("MONGO_URI:", process.env.MONGO_URI);
 
 
 // Middleware
