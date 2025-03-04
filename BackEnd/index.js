@@ -46,10 +46,10 @@ app.get("*", (_, res) => {
 });
 
 // Start the server after ensuring DB connection
-const PORT =  process.env.PORT||8000;
+const PORT = process.env.PORT || 8000;
 
 // Start the server
 app.listen(PORT, () => {
   connectDB(); // Ensure database connection
   console.log(`Server is running on port ${PORT}`);
-}); 
+});
