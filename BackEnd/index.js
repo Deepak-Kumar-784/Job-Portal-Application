@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 // CORS configuration
 const corsOptions = {
-  origin: "https://job-portal-application-2-ilnb.onrender.com", // Removed trailing slash
+  origin: "https://job-portal-application-0py2.onrender.com/", // Removed trailing slash
   credentials: true,
 };
 app.use(cors(corsOptions));
