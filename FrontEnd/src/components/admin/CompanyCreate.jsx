@@ -22,7 +22,8 @@ const CompanyCreate = () => {
   
     try {
       const res = await axios.post(
-        "http://localhost:8002/api/v1/company/register",
+        "https://job-portal-application-1-624g.onrender.com/api/v1/company/register"
+,
         { companyName: companyName }, // Ensure correct key if API expects `name`
         {
           headers: { 'Content-Type': 'application/json' },
