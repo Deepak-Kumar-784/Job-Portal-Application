@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 // CORS configuration
 const corsOptions = {
-  origin: "http://localhost:8004", // Allow both local & deployed frontend
+  origin: "https://job-portal-application-1-624g.onrender.com", // Allow both local & deployed frontend
   credentials: true, // Allow cookies & authorization headers
   
 };
