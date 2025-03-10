@@ -22,10 +22,13 @@ app.use(cookieParser());
 
 // CORS configuration
 const corsOptions = {
-  origin: "https://job-portal-application-0py2.onrender.com", // Removed trailing slash
-  credentials: true,
+  origin: "http://localhost:8004", // Allow both local & deployed frontend
+  credentials: true, // Allow cookies & authorization headers
+  
 };
+
 app.use(cors(corsOptions));
+
 
 // API Routes
 app.use("/api/v1/user", userRoute);
@@ -36,17 +39,14 @@ app.use("/api/v1/application", applicationRoute);
 // Serve frontend files
 app.use(express.static(path.join(__dirname, "/FrontEnd/dist")));
 
+
+
 app.get("*", (_, res) => {
-  try {
-    res.sendFile(path.resolve(__dirname, "FrontEnd", "dist", "index.html"));
-  } catch (error) {
-    console.error("Error serving frontend:", error);
-    res.status(500).send("Internal Server Error");
-  }
+  res.sendFile(path.resolve(__dirname, "FrontEnd", "dist", "index.html"));
 });
 
-// Start the server after ensuring DB connection
-const PORT = process.env.PORT || 8000;
+// Start the server after ensurinyg DB connection
+const PORT = process.env.PORT || 8005;
 
 // Start the server
 app.listen(PORT, () => {
